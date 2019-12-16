@@ -1,16 +1,1 @@
-[
-    {
-        "name": "Emil Hernvall",
-        "address": "Sveavägen 1",
-        "zip": "111 11",
-        "city": "Stockholm",
-        "phonenr": "0705-497019"
-    },
-    {
-        "name": "Hannes Hernvall",
-        "address": "Sveavägen 2",
-        "zip": "111 11",
-        "city": "Stockholm",
-        "phonenr": "0705-497019"
-    }
-]
+[{"name":"Emil Hernvall","address":"Sveavägen 1","zip":"111 11","city":"Stockholm","phonenr":"0705-497019"},{"name":"Hannes Hernvall","address":"Sveavägen 2","zip":"111 11","city":"Stockholm","phonenr":"0705-497019"},{"name":"Lia Hernvall","address":"Sveavägen 3","zip":"111 11","city":"Stockholm","phonenr":"0705-111111"}]
