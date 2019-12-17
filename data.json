@@ -26,5 +26,54 @@
         "zip": "111 11",
         "city": "Stockholm",
         "phonenr": "0706-111111"
+    },
+    {
+        "name": "Anette Hernvall",
+        "address": "a",
+        "zip": "b",
+        "city": "c",
+        "phonenr": "d"
+    },
+    {
+        "name": "a",
+        "address": "b",
+        "zip": "c",
+        "city": "d",
+        "phonenr": "e"
+    },
+    {
+        "name": "a",
+        "address": "b",
+        "zip": "c",
+        "city": "d",
+        "phonenr": "e"
+    },
+    {
+        "name": "a",
+        "address": "b",
+        "zip": "c",
+        "city": "d",
+        "phonenr": "e"
+    },
+    {
+        "name": "a",
+        "address": "b",
+        "zip": "c",
+        "city": "d",
+        "phonenr": "e"
+    },
+    {
+        "name": "a",
+        "address": "b",
+        "zip": "c",
+        "city": "d",
+        "phonenr": "e"
+    },
+    {
+        "name": "test",
+        "address": "a",
+        "zip": "b",
+        "city": "c",
+        "phonenr": "d"
     }
 ]

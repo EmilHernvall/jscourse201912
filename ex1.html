@@ -46,6 +46,15 @@ function createCell(text) {
     td.innerText = text;
     return td;
 }
+function createRow(entry) {
+    const tr = document.createElement("TR");
+    tr.appendChild(createCell(entry.name));
+    tr.appendChild(createCell(entry.address));
+    tr.appendChild(createCell(entry.zip));
+    tr.appendChild(createCell(entry.city));
+    tr.appendChild(createCell(entry.phonenr));
+    return tr;
+}
 window.addEventListener("load", async () => {
     console.log("Page loaded");
 
@@ -55,13 +64,7 @@ window.addEventListener("load", async () => {
     const entries = response.addressbook;
     const entryListTable = document.getElementById("entry-table");
     for (const entry of entries) {
-        const tr = document.createElement("TR");
-        tr.appendChild(createCell(entry.name));
-        tr.appendChild(createCell(entry.address));
-        tr.appendChild(createCell(entry.zip));
-        tr.appendChild(createCell(entry.city));
-        tr.appendChild(createCell(entry.phonenr));
-        entryListTable.appendChild(tr);
+        entryListTable.appendChild(createRow(entry));
     }
 
     const entryForm = document.getElementById("entry-form");
@@ -83,14 +86,33 @@ window.addEventListener("load", async () => {
             phonenr: phonenrField.value,
         };
 
+        entryListTable.appendChild(createRow(entry));
+
         fetch("http://localhost:3000", {
             method: "POST",
             body: JSON.stringify(entry),
             headers: {
                 "Content-Type": "application/json"
             },
-        }).then(() => {
+        }).then((response) => response.json())
+        .then((response) => {
+            // TODO: empty entry-table
+
+            let current = entryListTable.firstChild.nextSibling.nextSibling;
+            while (current != null) {
+                const next = current.nextSibling;
+                entryListTable.removeChild(current);
+                current = next;
+            }
+
+            // TODO: reinsert everything in table
+            const entries = response.addressbook;
+            for (const entry of entries) {
+                entryListTable.appendChild(createRow(entry));
+            }
+
             console.log("entry added on server");
+            nameField.value = "";
         });
     });
 });
