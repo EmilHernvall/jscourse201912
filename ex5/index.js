@@ -1,12 +1,14 @@
 const fs = require("fs");
 const promisify = require("util").promisify;
 const express = require("express");
+const cors = require("cors");
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.get("/", async (req, res) => {
     const entries = JSON.parse((await readFile("../data.json")).toString());

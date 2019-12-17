@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Example 1</h1>
+<table id="entry-table">
+    <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Zip</th>
+        <th>City</th>
+        <th>PhoneNR</th>
+    </tr>
+</table>
+
+<form id="entry-form">
+    <h3>New Entry</h3>
+
+    <div>
+        <label>Name</label>
+        <input type="text" id="entry-name" />
+    </div>
+    <div>
+        <label>Address</label>
+        <input type="text" id="entry-address" />
+    </div>
+    <div>
+        <label>Zip</label>
+        <input type="text" id="entry-zip" />
+    </div>
+    <div>
+        <label>City</label>
+        <input type="text" id="entry-city" />
+    </div>
+    <div>
+        <label>PhoneNR</label>
+        <input type="text" id="entry-phonenr" />
+    </div>
+    <div>
+        <button type="submit">Add Entry</button>
+    </div>
+</form>
+
+<script>
+function createCell(text) {
+    const td = document.createElement("TD");
+    td.innerText = text;
+    return td;
+}
+window.addEventListener("load", async () => {
+    console.log("Page loaded");
+
+    const response = await fetch("http://localhost:3000")
+        .then((response) => response.json());
+
+    const entries = response.addressbook;
+    const entryListTable = document.getElementById("entry-table");
+    for (const entry of entries) {
+        const tr = document.createElement("TR");
+        tr.appendChild(createCell(entry.name));
+        tr.appendChild(createCell(entry.address));
+        tr.appendChild(createCell(entry.zip));
+        tr.appendChild(createCell(entry.city));
+        tr.appendChild(createCell(entry.phonenr));
+        entryListTable.appendChild(tr);
+    }
+
+    const entryForm = document.getElementById("entry-form");
+    entryForm.addEventListener("submit", (e) => {
+        console.log("Form submitted");
+        e.preventDefault();
+
+        const nameField = document.getElementById("entry-name");
+        const addressField = document.getElementById("entry-address");
+        const zipField = document.getElementById("entry-zip");
+        const cityField = document.getElementById("entry-city");
+        const phonenrField = document.getElementById("entry-phonenr");
+
+        const entry = {
+            name: nameField.value,
+            address: addressField.value,
+            zip: zipField.value,
+            city: cityField.value,
+            phonenr: phonenrField.value,
+        };
+
+        fetch("http://localhost:3000", {
+            method: "POST",
+            body: JSON.stringify(entry),
+            headers: {
+                "Content-Type": "application/json"
+            },
+        }).then(() => {
+            console.log("entry added on server");
+        });
+    });
+});
+</script>
+</body>
+</html>
