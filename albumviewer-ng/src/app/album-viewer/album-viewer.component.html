@@ -1,0 +1,6 @@
+<table>
+    <tr *ngFor="let photo of photos$ | async">
+        <td><img [src]="photo.thumbnailUrl" /></td>
+        <td>{{ photo.title }}</td>
+    </tr>
+</table>

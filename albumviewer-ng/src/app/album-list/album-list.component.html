@@ -1,0 +1,7 @@
+<ul>
+    <li
+        (click)="onAlbumSelected(album.id)"
+        *ngFor="let album of albums$ | async">
+        {{ album.title }}
+    </li>
+</ul>

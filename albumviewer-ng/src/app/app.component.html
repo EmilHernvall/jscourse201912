@@ -1,0 +1,6 @@
+<app-album-list
+  (albumChanged)="onAlbumSelected($event)"></app-album-list>
+<app-album-viewer
+  [albumId]="albumId"
+  ></app-album-viewer>
+<router-outlet></router-outlet>

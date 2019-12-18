@@ -1,0 +1,9 @@
+.App {
+  display: flex;
+}
+.album-list {
+  width: 200px;
+}
+.album-viewer {
+  flex: 1;
+}
