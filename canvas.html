@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<body>
+<canvas
+    width="500"
+    height="500"
+    id="canvas"
+    style="outline: 1px solid #000;"></canvas>
+<script>
+window.addEventListener("load", () => {
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    const canvasPos = canvas.getClientRects()[0];
+    const canvasX = canvasPos.x;
+    const canvasY = canvasPos.y;
+
+    let clicked = false;
+    let points = [];
+    let color = 0x1000FF;
+    canvas.addEventListener("mousedown", () => {
+        clicked = true;
+    });
+    document.addEventListener("mouseup", () => {
+        clicked = false;
+
+        ws.send(JSON.stringify({
+            eventType: "pixels",
+            points: points,
+        }));
+
+        points = [];
+    });
+    canvas.addEventListener("mousemove", (e) => {
+        if (!clicked) {
+            return;
+        }
+
+        let x = e.clientX - canvasX;
+        let y = e.clientY - canvasY;
+
+        x = x - (x % 5);
+        y = y - (y % 5);
+
+        ctx.fillStyle = "#" + color.toString(16);
+        ctx.fillRect(x, y, 5, 5);
+
+        points.push({
+            x: x/5,
+            y: y/5,
+            c: color,
+        });
+    });
+
+    const ws = new WebSocket("ws://localhost:8080");
+    ws.addEventListener("message", (e) => {
+        const incomingEvent = JSON.parse(e.data);
+        if (incomingEvent.eventType === "initialData") {
+            for (let x = 0; x < 100; x++) {
+                for (let y = 0; y < 100; y++) {
+                    const idx = 100*y + x;
+                    const color = incomingEvent.image[idx].toString(16);
+                    ctx.fillStyle = "#" + color;
+                    ctx.fillRect(5*x, 5*y, 5, 5);
+                }
+            }
+        }
+        else if (incomingEvent.eventType === "pixels") {
+            for (const point of incomingEvent.points) {
+                ctx.fillStyle = "#" + point.c.toString(16);
+                ctx.fillRect(5*point.x, 5*point.y, 5, 5);
+            }
+        }
+    });
+});
+</script>
+</body>
+</html>
